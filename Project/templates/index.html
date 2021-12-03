@@ -1,0 +1,77 @@
+{% extends 'template.html' %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5 main-panel">
+            <div class="panel-tabs">
+                <div class="tab-content">
+					<div class="text-center" style="margin: 0px; padding:3px; background-color:#286090; color:#FFF; border-radius: 10px 10px 0px 0px">
+						<h3>{{ page_title }}</h3>
+					</div>
+                    <div role="tabpanel" style="border-radius: 0px 0px 10px 10px" class="tab-pane fade in component-box active" id="write_text">
+                        <form action="/analyze_text" method="POST">
+                            <div class="input-area">
+                                <label>Enter Your Text</label>
+                                <textarea class="form-control" name="text_input_text" style="padding: 10px" rows="16" placeholder="Type your text here to get summary and get category..." required></textarea>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-xs-6"><label>Select Classifier</label></div>
+                                <div class="col-xs-6">
+                                <select class="form-control" name="text_classifier">
+                                    <option value="ridge_model" />Ridge Model</option>
+                                    <option value="random_forest_model" />Random Forest</option>
+                                    <option value="logistic_regression_model" />Logistic Regression</option>
+                                    <option value="kneighbors_model" />Kneighbors Model</option>
+                                    <option value="gaussian_nb_model" />Gaussian Nb</option>
+                                    <option value="decision_tree_model" />Decision Tree</option>
+									<option value="keras_tokenizer" />Keras Tokenizer</option>
+                                </select>
+                                </div>
+                            </div>
+							<br>
+                            <div class="row">
+                                <div class="col-xs-6"><label>Select Summarizer</label></div>
+                                <div class="col-xs-6">
+                                <select class="form-control" name="text_summarizer">
+									<option value="gensim" />Gensim Summarizer</option>
+                                    <option value="nltk"/>NLTK Summarizer</option>
+                                    <option value="textrank" />Summarization using TextRank</option>
+                                </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-xs-8"><label>How Many Sentences?</label></div>
+                                <div class="col-xs-3">
+                                <input type="number" class="form-control" name="text_sentences_number" value="10"></input>
+                                </div>
+                            </div>
+                            <br>
+                            <input type="submit" value="Get Summary & Category" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if text_summary %}
+        <div class="output-panel col-md-7">
+            <div class="component-box normal-input-text">
+                <label>Your Input Text</label>
+                <p>{{ input_text }}</p>
+            </div>
+            <div class="component-box summary-text">
+                <label>Text Category: <h1 style="color:#286090;">{{text_category}}</h1></label>
+				<br />
+				<label>Text Summary</label>
+                <p>{{ text_summary }}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="welcome-panel col-md-7">
+            <h1>Your Summarized Text & Its Category will be displayed here...</h1>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
